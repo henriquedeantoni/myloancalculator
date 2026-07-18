@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">myloancalculator</string>
+    <string name="name_app">Loan Calculator</string>
 </resources>
