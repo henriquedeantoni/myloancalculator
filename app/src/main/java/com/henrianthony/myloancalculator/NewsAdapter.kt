@@ -23,7 +23,7 @@ class NewsAdapter (
 
             itemView.setOnClickListener {
                 val now = System.currentTimeMillis()
-                if (now - lastClickTime < 500) {
+                if (now - lastClickTime < 800) {
                     // TODO check the time to double click
                     onDoubleClick(news)
                 }
