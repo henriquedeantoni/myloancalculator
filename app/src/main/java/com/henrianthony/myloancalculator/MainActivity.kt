@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, NewsDetailsActivity::class.java)
             intent.putExtra("titulo", news.title)
             intent.putExtra("resumo", news.review)
+            startActivity(intent)
         }
 
         recyclerView.adapter = adapter
