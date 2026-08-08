@@ -1,5 +1,7 @@
 package com.henrianthony.myloancalculator.model;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public class Loan {
@@ -9,15 +11,17 @@ public class Loan {
     private Double loanAmount;
     private Double tax;
     private Integer months;
-
+    private LocalDate opening;
+    private List<Installment> installments;
     public Loan(){};
 
-    public Loan(String name, Double loanAmount, Double tax, Integer months){
+    public Loan(String name, Double loanAmount, Double tax, Integer months, LocalDate opening){
         this.id = UUID.randomUUID();
         this.name = name;
         this.loanAmount = loanAmount;
         this.tax = tax;
         this.months = months;
+        this.opening = opening;
     }
 
     public UUID getId() {
@@ -58,5 +62,13 @@ public class Loan {
 
     public void setMonths(Integer months) {
         this.months = months;
+    }
+
+    public LocalDate getOpening() {
+        return opening;
+    }
+
+    public void setOpening(LocalDate opening) {
+        this.opening = opening;
     }
 }
