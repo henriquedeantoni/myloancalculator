@@ -1,4 +1,5 @@
 package com.henrianthony.myloancalculator.exceptions
 
-class NoArgsLoanCalculationException {
-}
+class NoArgsLoanCalculationException(
+    message: String
+) : Exception(message)
