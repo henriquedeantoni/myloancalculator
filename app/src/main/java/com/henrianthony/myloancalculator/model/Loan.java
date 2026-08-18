@@ -1,28 +1,36 @@
 package com.henrianthony.myloancalculator.model;
 
+import com.henrianthony.myloancalculator.exceptions.NoArgsLoanCalculationException;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
+import kotlin.jvm.Throws;
 
 public class Loan {
     private UUID id;
     private String name;
 
     private Double loanAmount;
-    private Double tax;
+    private Double taxRate;
+    private Double instalments;
     private Integer months;
     private LocalDate opening;
     private List<Installment> installments;
     public Loan(){};
 
-    public Loan(String name, Double loanAmount, Double tax, Integer months, LocalDate opening){
+    public Loan(String name, Double loanAmount, Double taxRate, Double instalments, Integer months, LocalDate opening){
         this.id = UUID.randomUUID();
         this.name = name;
         this.loanAmount = loanAmount;
-        this.tax = tax;
+        this.instalments = instalments;
+        this.taxRate = taxRate;
         this.months = months;
         this.opening = opening;
     }
+
+
 
     public UUID getId() {
         return id;
@@ -48,12 +56,15 @@ public class Loan {
         this.loanAmount = loanAmount;
     }
 
-    public Double getTax() {
-        return tax;
+    public Double getInstalments() {return instalments;}
+
+    public void setInstalments(Double instalments){this.instalments = instalments;}
+    public Double getTaxRate() {
+        return taxRate;
     }
 
     public void setTax(Double tax) {
-        this.tax = tax;
+        this.taxRate = taxRate;
     }
 
     public Integer getMonths() {
@@ -70,5 +81,15 @@ public class Loan {
 
     public void setOpening(LocalDate opening) {
         this.opening = opening;
+    }
+
+    public Double caulculateInstalments() throws NoArgsLoanCalculationException {
+        var value=0.0;
+        if(loanAmount>=0 && taxRate>=0 && months>=0){
+            value = loanAmount*taxRate*(Math.pow((1+taxRate), months))/(Math.pow(1+taxRate, months)-1);
+        } else {
+            throw new NoArgsLoanCalculationException("Error to calculate the Instalments");
+        }
+        return 0.0;
     }
 }
