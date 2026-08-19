@@ -19,4 +19,6 @@ class NewsDetailsActivity : AppCompatActivity() {
         tituloView.text = title
         resumoView.text = review
     }
+
+
 }

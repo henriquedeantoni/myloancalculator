@@ -1,5 +1,8 @@
 package com.henrianthony.myloancalculator.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.henrianthony.myloancalculator.exceptions.NoArgsLoanCalculationException;
 
 import java.time.LocalDate;
@@ -8,8 +11,11 @@ import java.util.UUID;
 
 import kotlin.jvm.Throws;
 
+@Entity(tableName = "loans")
 public class Loan {
-    private UUID id;
+
+    @PrimaryKey(autoGenerate = true)
+    private Long id;
     private String name;
 
     private Double loanAmount;
@@ -21,7 +27,6 @@ public class Loan {
     public Loan(){};
 
     public Loan(String name, Double loanAmount, Double taxRate, Double instalments, Integer months, LocalDate opening){
-        this.id = UUID.randomUUID();
         this.name = name;
         this.loanAmount = loanAmount;
         this.instalments = instalments;
@@ -32,11 +37,11 @@ public class Loan {
 
 
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
