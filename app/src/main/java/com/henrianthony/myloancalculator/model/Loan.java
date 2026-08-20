@@ -7,9 +7,6 @@ import com.henrianthony.myloancalculator.exceptions.NoArgsLoanCalculationExcepti
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
-
-import kotlin.jvm.Throws;
 
 @Entity(tableName = "loans")
 public class Loan {
@@ -34,8 +31,6 @@ public class Loan {
         this.months = months;
         this.opening = opening;
     }
-
-
 
     public Long getId() {
         return id;
