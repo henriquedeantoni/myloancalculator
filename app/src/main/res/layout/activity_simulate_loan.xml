@@ -79,7 +79,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_asset"
+                    android:id="@+id/text_assetName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Toyota Prius" />

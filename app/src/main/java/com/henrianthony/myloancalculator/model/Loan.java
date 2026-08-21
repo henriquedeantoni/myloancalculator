@@ -1,6 +1,7 @@
 package com.henrianthony.myloancalculator.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.henrianthony.myloancalculator.exceptions.NoArgsLoanCalculationException;
@@ -20,13 +21,13 @@ public class Loan {
     private Double instalments;
     private Integer months;
     private LocalDate opening;
+    @Ignore
     private List<Installment> installments;
     public Loan(){};
 
-    public Loan(String name, Double loanAmount, Double taxRate, Double instalments, Integer months, LocalDate opening){
+    public Loan(String name, Double loanAmount, Double taxRate, Integer months, LocalDate opening){
         this.name = name;
         this.loanAmount = loanAmount;
-        this.instalments = instalments;
         this.taxRate = taxRate;
         this.months = months;
         this.opening = opening;
@@ -63,7 +64,7 @@ public class Loan {
         return taxRate;
     }
 
-    public void setTax(Double tax) {
+    public void setTaxRate(Double taxRate) {
         this.taxRate = taxRate;
     }
 
@@ -85,11 +86,14 @@ public class Loan {
 
     public Double caulculateInstalments() throws NoArgsLoanCalculationException {
         var value=0.0;
+        if(taxRate==0){
+            value=0.0;
+        }
         if(loanAmount>=0 && taxRate>=0 && months>=0){
             value = loanAmount*taxRate*(Math.pow((1+taxRate), months))/(Math.pow(1+taxRate, months)-1);
         } else {
             throw new NoArgsLoanCalculationException("Error to calculate the Instalments");
         }
-        return 0.0;
+        return value;
     }
 }

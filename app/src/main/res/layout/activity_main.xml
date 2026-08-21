@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/calculate_button3"
+        android:id="@+id/button_mySimulations"
         style="@style/Widget.Material3.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         app:cornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calculate_button" />
+        app:layout_constraintTop_toBottomOf="@+id/button_simulateLoan" />
 
     <TextView
         android:id="@+id/title_text"
@@ -38,7 +38,7 @@
         app:layout_constraintVertical_bias="0.042" />
 
     <Button
-        android:id="@+id/calculate_button"
+        android:id="@+id/button_simulateLoan"
         style="@style/Widget.Material3.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,6 +71,6 @@
         android:layout_marginTop="16dp"
         android:text="@string/news_title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calculate_button3" />
+        app:layout_constraintTop_toBottomOf="@+id/button_mySimulations" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
