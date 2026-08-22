@@ -18,20 +18,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        val buttonSimulateLoan = findViewById<Button>(R.id.button_simulateLoan)
+
+        val buttonSimulations = findViewById<Button>(R.id.button_mySimulations)
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView_news)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        val buttonSimulateLoan = findViewById<Button>(R.id.button_simulateLoan)
-
-        buttonSimulateLoan.setOnClickListener {
-            val intent = Intent(this, SimulateLoanActivity::class.java)
-            startActivity(intent)
-        }
-
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView_news)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val adapter = NewsAdapter(MockNews.mockList){ news ->
@@ -42,5 +40,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         recyclerView.adapter = adapter
+
+        buttonSimulateLoan.setOnClickListener {
+            val intent = Intent(this, SimulateLoanActivity::class.java)
+            startActivity(intent)
+        }
+
+        buttonSimulations.setOnClickListener {
+            val intent = Intent(this, SimulationsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
