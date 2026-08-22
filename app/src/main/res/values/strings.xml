@@ -2,4 +2,5 @@
     <string name="app_name">myloancalculator</string>
     <string name="name_app">Loan Calculator</string>
     <string name="news_title">News</string>
+    <string name="loan_amount">$ %1$s</string>
 </resources>

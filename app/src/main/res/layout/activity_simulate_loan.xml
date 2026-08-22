@@ -2,8 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_simulateLoan"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <Button
         android:id="@+id/button_return"
@@ -119,7 +122,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linear_upper" >
+        app:layout_constraintTop_toBottomOf="@+id/linear_upper">
 
         <TextView
             android:id="@+id/text_loanAmount"
@@ -132,11 +135,11 @@
 
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <EditText
             android:id="@+id/text_valueAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="$ 100,00"
+            android:text="$ 1.000,00"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,9 +150,7 @@
             android:id="@+id/seekBar_loanAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="5"
-            />
+            android:progress="0" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -217,9 +218,9 @@
             android:id="@+id/seekBar_loanPeriod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="0"
-            />
+            android:max="360"
+            android:min="12"
+            android:progress="0" />
 
         <LinearLayout
             android:layout_width="match_parent"
