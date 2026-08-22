@@ -15,7 +15,6 @@ import com.henrianthony.myloancalculator.data.AppDatabase
 import com.henrianthony.myloancalculator.model.Loan
 import com.henrianthony.myloancalculator.repositories.LoanRepository
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.util.Locale
@@ -79,14 +78,18 @@ class SimulateLoanActivity : AppCompatActivity() {
                 );
 
             // show dialog message to save loan on db
-            AlertDialog.Builder(this)
+            val saveDialog = AlertDialog.Builder(this)
                 .setTitle("Save Simulation")
                 .setMessage("Would you like save this simulation?")
                 .setPositiveButton("Yes") { _,_ ->
 
                     // insert on db
-                    lifecycleScope.launch {
-                        repository.insertLoan(loan)
+                    try{
+                        lifecycleScope.launch {
+                            repository.insertLoan(loan)
+                        }
+                    } catch (e : Exception){
+                        errorDialogMessage(e.message)
                     }
                 }
                 .setNegativeButton("No") { dialog, _ -> dialog.dismiss()
@@ -169,6 +172,20 @@ class SimulateLoanActivity : AppCompatActivity() {
         } catch (e: Exception) {
             null
         }
+    }
+
+    fun errorDialogMessage(message: String?) {
+        val newDialog = AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage("Error on save Loan \n$message")
+            .setPositiveButton("Yes") { _,_ ->
+
+            }.create()
+
+        newDialog.setOnShowListener {
+            newDialog.window?.decorView?.bringToFront()
+        }
+        newDialog.show()
     }
 
 }
