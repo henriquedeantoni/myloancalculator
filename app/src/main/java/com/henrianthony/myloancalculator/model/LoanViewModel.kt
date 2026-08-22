@@ -9,18 +9,22 @@ import java.time.LocalDate
 
 class LoanViewModel (private val repository: LoanRepository) : ViewModel() {
 
-    fun saveLoan(
-        name: String,
-        loanAmount: Double,
-        taxRate: Double,
-        instalments: Double,
-        months: Int,
-        opening: LocalDate
+    fun saveLoan( loan: Loan
     ){
-        val loan = Loan(name, loanAmount, taxRate, months, opening)
-
         viewModelScope.launch {
             repository.insertLoan(loan)
+        }
+    }
+
+    fun loadLoans(){
+        viewModelScope.launch {
+            val loans = repository.searchAll()
+        }
+    }
+
+    fun updateLoan(loan: Loan){
+        viewModelScope.launch{
+            repository.updateLoan(loan)
         }
     }
 }

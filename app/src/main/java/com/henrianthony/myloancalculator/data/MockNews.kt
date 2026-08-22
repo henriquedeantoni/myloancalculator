@@ -1,6 +1,6 @@
 package com.henrianthony.myloancalculator.data
 
-import com.henrianthony.myloancalculator.News
+import com.henrianthony.myloancalculator.model.News
 import java.time.LocalDate
 
 object MockNews {

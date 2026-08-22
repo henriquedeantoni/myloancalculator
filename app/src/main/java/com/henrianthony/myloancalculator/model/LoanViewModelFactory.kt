@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.henrianthony.myloancalculator.repositories.LoanRepository
 
 class LoanViewModelFactory(
-
-
     private val repository: LoanRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(
@@ -20,7 +18,7 @@ class LoanViewModelFactory(
         }
 
         throw IllegalArgumentException(
-            "ViewModel desconhecido"
+            "ViewModel unknown"
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.henrianthony.myloancalculator
+package com.henrianthony.myloancalculator.ui
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -8,21 +8,29 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
+import com.henrianthony.myloancalculator.LoanApplication
 import com.henrianthony.myloancalculator.data.AppDatabase
 import com.henrianthony.myloancalculator.model.Loan
+import com.henrianthony.myloancalculator.model.LoanViewModel
+import com.henrianthony.myloancalculator.model.LoanViewModelFactory
 import com.henrianthony.myloancalculator.repositories.LoanRepository
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.util.Locale
 
-class SimulateLoanActivity : AppCompatActivity() {
+class SimulateLoanActivity : androidx.appcompat.app.AppCompatActivity() {
 
-    private lateinit var database: AppDatabase
-    private lateinit var repository: LoanRepository
+    private val viewModel: LoanViewModel by viewModels {
+        LoanViewModelFactory(
+            (application as LoanApplication).repository
+        )
+    }
+
     var locale = Locale.getDefault()
     val format = NumberFormat.getNumberInstance(locale)
 
@@ -31,35 +39,25 @@ class SimulateLoanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_simulate_loan)
+        setContentView(_root_ide_package_.com.henrianthony.myloancalculator.R.layout.activity_simulate_loan)
 
-        val seekBarLoanPeriod = findViewById<SeekBar>(R.id.seekBar_loanPeriod)
+        val seekBarLoanPeriod = findViewById<SeekBar>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.seekBar_loanPeriod)
 
-        val textValuePeriod = findViewById<TextView>(R.id.text_valuePeriod)
+        val textValuePeriod = findViewById<TextView>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.text_valuePeriod)
 
-        val seekBarLoanAmount = findViewById<SeekBar>(R.id.seekBar_loanAmount)
+        val seekBarLoanAmount = findViewById<SeekBar>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.seekBar_loanAmount)
 
-        val textValueAmount = findViewById<EditText>(R.id.text_valueAmount)
+        val textValueAmount = findViewById<EditText>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.text_valueAmount)
 
-        val main = findViewById<View>(R.id.main_simulateLoan)
+        val main = findViewById<View>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.main_simulateLoan)
 
         main.setOnClickListener {
             main.requestFocus()
         }
 
-        database = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "loan.db"
-        ).build()
+        val loanNameView = findViewById<TextView>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.text_assetName)
 
-        repository = LoanRepository(
-            database.loanDao()
-        )
-
-        val loanNameView = findViewById<TextView>(R.id.text_assetName)
-
-        val buttonSaveSimulation = findViewById<Button>(R.id.button_saveSimulation)
+        val buttonSaveSimulation = findViewById<Button>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.button_saveSimulation)
 
         buttonSaveSimulation.setOnClickListener {
 
@@ -83,11 +81,9 @@ class SimulateLoanActivity : AppCompatActivity() {
                 .setMessage("Would you like save this simulation?")
                 .setPositiveButton("Yes") { _,_ ->
 
-                    // insert on db
+                    // persist loan object
                     try{
-                        lifecycleScope.launch {
-                            repository.insertLoan(loan)
-                        }
+                        viewModel.saveLoan(loan)
                     } catch (e : Exception){
                         errorDialogMessage(e.message)
                     }

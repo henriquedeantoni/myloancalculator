@@ -1,10 +1,9 @@
-package com.henrianthony.myloancalculator
+package com.henrianthony.myloancalculator.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.henrianthony.myloancalculator.data.MockNews
 import com.henrianthony.myloancalculator.R
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : androidx.appcompat.app.AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -32,12 +31,13 @@ class MainActivity : AppCompatActivity() {
         }
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val adapter = NewsAdapter(MockNews.mockList){ news ->
-            val intent = Intent(this, NewsDetailsActivity::class.java)
-            intent.putExtra("titulo", news.title)
-            intent.putExtra("resumo", news.review)
-            startActivity(intent)
-        }
+        val adapter =
+            NewsAdapter(MockNews.mockList) { news ->
+                val intent = Intent(this, NewsDetailsActivity::class.java)
+                intent.putExtra("titulo", news.title)
+                intent.putExtra("resumo", news.review)
+                startActivity(intent)
+            }
 
         recyclerView.adapter = adapter
 
