@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         val buttonSimulateLoan = findViewById<Button>(R.id.button_simulateLoan)
 
+        val buttonSimulations = findViewById<Button>(R.id.button_mySimulations)
+
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView_news)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -41,6 +43,11 @@ class MainActivity : AppCompatActivity() {
 
         buttonSimulateLoan.setOnClickListener {
             val intent = Intent(this, SimulateLoanActivity::class.java)
+            startActivity(intent)
+        }
+
+        buttonSimulations.setOnClickListener {
+            val intent = Intent(this, SimulationsActivity::class.java)
             startActivity(intent)
         }
     }
