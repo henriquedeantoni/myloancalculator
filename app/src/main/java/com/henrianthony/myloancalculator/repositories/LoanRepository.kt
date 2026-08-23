@@ -18,8 +18,10 @@ class LoanRepository (
         return loanDao.searchById(id)
     }
 
-    suspend fun updateLoan(loan: Loan){
+    suspend fun updateLoan(loan: Loan): Loan?{
         loanDao.updateLoan(loan)
+
+        return loanDao.searchById(loan.id)
     }
 
     suspend fun deleteLoan(loan: Loan){

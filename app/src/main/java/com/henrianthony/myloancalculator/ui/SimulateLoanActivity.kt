@@ -38,7 +38,6 @@ class SimulateLoanActivity : androidx.appcompat.app.AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(_root_ide_package_.com.henrianthony.myloancalculator.R.layout.activity_simulate_loan)
 
         val seekBarLoanPeriod = findViewById<SeekBar>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.seekBar_loanPeriod)

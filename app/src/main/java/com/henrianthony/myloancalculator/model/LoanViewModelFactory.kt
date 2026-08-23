@@ -14,7 +14,7 @@ class LoanViewModelFactory(
         if (modelClass.isAssignableFrom(LoanViewModel::class.java)) {
 
             @Suppress("UNCHECKED_CAST")
-            return LoanViewModelFactory(repository) as T
+            return LoanViewModel(repository) as T
         }
 
         throw IllegalArgumentException(

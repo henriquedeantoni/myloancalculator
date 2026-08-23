@@ -17,7 +17,7 @@ class NewsAdapter (
         private var lastClickTime = 0L
 
         fun bind(news: News) {
-            val titulo = itemView.findViewById<TextView>(R.id.titulo)
+            val titulo = itemView.findViewById<TextView>(R.id.text_title)
             val resumo = itemView.findViewById<TextView>(R.id.resumo)
 
             titulo.text = news.title
