@@ -1,28 +1,38 @@
-package com.henrianthony.myloancalculator
+package com.henrianthony.myloancalculator.ui
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
+import com.henrianthony.myloancalculator.LoanApplication
+import com.henrianthony.myloancalculator.R
 import com.henrianthony.myloancalculator.data.AppDatabase
 import com.henrianthony.myloancalculator.model.Loan
+import com.henrianthony.myloancalculator.model.LoanViewModel
+import com.henrianthony.myloancalculator.model.LoanViewModelFactory
 import com.henrianthony.myloancalculator.repositories.LoanRepository
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.time.LocalDate
 import java.util.Locale
 
-class SimulateLoanActivity : AppCompatActivity() {
+class SimulateLoanActivity : androidx.appcompat.app.AppCompatActivity() {
 
-    private lateinit var database: AppDatabase
-    private lateinit var repository: LoanRepository
+    private val viewModel: LoanViewModel by viewModels {
+        LoanViewModelFactory(
+            (application as LoanApplication).repository
+        )
+    }
+
     var locale = Locale.getDefault()
     val format = NumberFormat.getNumberInstance(locale)
 
@@ -30,7 +40,6 @@ class SimulateLoanActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_simulate_loan)
 
         val seekBarLoanPeriod = findViewById<SeekBar>(R.id.seekBar_loanPeriod)
@@ -43,23 +52,15 @@ class SimulateLoanActivity : AppCompatActivity() {
 
         val main = findViewById<View>(R.id.main_simulateLoan)
 
+        val buttonReturn = findViewById<Button>(R.id.button_return)
+
         main.setOnClickListener {
             main.requestFocus()
         }
 
-        database = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "loan.db"
-        ).build()
+        val loanNameView = findViewById<TextView>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.text_assetName)
 
-        repository = LoanRepository(
-            database.loanDao()
-        )
-
-        val loanNameView = findViewById<TextView>(R.id.text_assetName)
-
-        val buttonSaveSimulation = findViewById<Button>(R.id.button_saveSimulation)
+        val buttonSaveSimulation = findViewById<Button>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.button_saveSimulation)
 
         buttonSaveSimulation.setOnClickListener {
 
@@ -83,11 +84,10 @@ class SimulateLoanActivity : AppCompatActivity() {
                 .setMessage("Would you like save this simulation?")
                 .setPositiveButton("Yes") { _,_ ->
 
-                    // insert on db
+                    // persist loan object
                     try{
-                        lifecycleScope.launch {
-                            repository.insertLoan(loan)
-                        }
+                        viewModel.saveLoan(loan)
+                        returnToMain()
                     } catch (e : Exception){
                         errorDialogMessage(e.message)
                     }
@@ -160,6 +160,11 @@ class SimulateLoanActivity : AppCompatActivity() {
                 }
             }
         )
+
+        buttonReturn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     fun parseCurrency(value: String): Double? {
@@ -188,4 +193,8 @@ class SimulateLoanActivity : AppCompatActivity() {
         newDialog.show()
     }
 
+    fun returnToMain(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 }

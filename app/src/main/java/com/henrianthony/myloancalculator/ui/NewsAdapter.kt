@@ -1,10 +1,12 @@
-package com.henrianthony.myloancalculator
+package com.henrianthony.myloancalculator.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.henrianthony.myloancalculator.R
+import com.henrianthony.myloancalculator.model.News
 
 class NewsAdapter (
     private val newsList: List<News>,
@@ -15,7 +17,7 @@ class NewsAdapter (
         private var lastClickTime = 0L
 
         fun bind(news: News) {
-            val titulo = itemView.findViewById<TextView>(R.id.titulo)
+            val titulo = itemView.findViewById<TextView>(R.id.text_title)
             val resumo = itemView.findViewById<TextView>(R.id.resumo)
 
             titulo.text = news.title

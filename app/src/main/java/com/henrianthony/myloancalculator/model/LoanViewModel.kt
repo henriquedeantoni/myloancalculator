@@ -1,26 +1,43 @@
 package com.henrianthony.myloancalculator.model
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.henrianthony.myloancalculator.repositories.LoanRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class LoanViewModel (private val repository: LoanRepository) : ViewModel() {
 
-    fun saveLoan(
-        name: String,
-        loanAmount: Double,
-        taxRate: Double,
-        instalments: Double,
-        months: Int,
-        opening: LocalDate
-    ){
-        val loan = Loan(name, loanAmount, taxRate, months, opening)
+    private val _loans = MutableStateFlow<List<Loan>>(emptyList())
 
+    private val _loan = MutableStateFlow<Loan?>(null)
+
+    val loans: StateFlow<List<Loan>> = _loans
+
+    val loan: StateFlow<Loan?> = _loan
+
+    fun saveLoan( loan: Loan
+    ){
         viewModelScope.launch {
             repository.insertLoan(loan)
+
+            Log.d("LOAN_DEBUG", "Loan salvo: ${loan.name}")
+        }
+    }
+
+    fun loadLoans(){
+        viewModelScope.launch {
+            _loans.value = repository.searchAll()
+        }
+    }
+
+    fun updateLoan(loan: Loan){
+        viewModelScope.launch{
+            _loan.value = repository.updateLoan(loan)
         }
     }
 }
