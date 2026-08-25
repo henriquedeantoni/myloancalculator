@@ -19,6 +19,4 @@ class NewsDetailsActivity : androidx.appcompat.app.AppCompatActivity() {
         tituloView.text = title
         resumoView.text = review
     }
-
-
 }

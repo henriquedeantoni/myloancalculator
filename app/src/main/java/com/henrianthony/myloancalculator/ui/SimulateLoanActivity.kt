@@ -2,6 +2,7 @@ package com.henrianthony.myloancalculator.ui
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -13,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.henrianthony.myloancalculator.LoanApplication
+import com.henrianthony.myloancalculator.R
 import com.henrianthony.myloancalculator.data.AppDatabase
 import com.henrianthony.myloancalculator.model.Loan
 import com.henrianthony.myloancalculator.model.LoanViewModel
@@ -38,17 +40,19 @@ class SimulateLoanActivity : androidx.appcompat.app.AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(_root_ide_package_.com.henrianthony.myloancalculator.R.layout.activity_simulate_loan)
+        setContentView(R.layout.activity_simulate_loan)
 
-        val seekBarLoanPeriod = findViewById<SeekBar>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.seekBar_loanPeriod)
+        val seekBarLoanPeriod = findViewById<SeekBar>(R.id.seekBar_loanPeriod)
 
-        val textValuePeriod = findViewById<TextView>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.text_valuePeriod)
+        val textValuePeriod = findViewById<TextView>(R.id.text_valuePeriod)
 
-        val seekBarLoanAmount = findViewById<SeekBar>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.seekBar_loanAmount)
+        val seekBarLoanAmount = findViewById<SeekBar>(R.id.seekBar_loanAmount)
 
-        val textValueAmount = findViewById<EditText>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.text_valueAmount)
+        val textValueAmount = findViewById<EditText>(R.id.text_valueAmount)
 
-        val main = findViewById<View>(_root_ide_package_.com.henrianthony.myloancalculator.R.id.main_simulateLoan)
+        val main = findViewById<View>(R.id.main_simulateLoan)
+
+        val buttonReturn = findViewById<Button>(R.id.button_return)
 
         main.setOnClickListener {
             main.requestFocus()
@@ -83,6 +87,7 @@ class SimulateLoanActivity : androidx.appcompat.app.AppCompatActivity() {
                     // persist loan object
                     try{
                         viewModel.saveLoan(loan)
+                        returnToMain()
                     } catch (e : Exception){
                         errorDialogMessage(e.message)
                     }
@@ -155,6 +160,11 @@ class SimulateLoanActivity : androidx.appcompat.app.AppCompatActivity() {
                 }
             }
         )
+
+        buttonReturn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     fun parseCurrency(value: String): Double? {
@@ -183,4 +193,8 @@ class SimulateLoanActivity : androidx.appcompat.app.AppCompatActivity() {
         newDialog.show()
     }
 
+    fun returnToMain(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 }

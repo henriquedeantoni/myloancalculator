@@ -1,5 +1,6 @@
 package com.henrianthony.myloancalculator.model
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -23,6 +24,8 @@ class LoanViewModel (private val repository: LoanRepository) : ViewModel() {
     ){
         viewModelScope.launch {
             repository.insertLoan(loan)
+
+            Log.d("LOAN_DEBUG", "Loan salvo: ${loan.name}")
         }
     }
 
